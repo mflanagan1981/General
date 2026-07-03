@@ -177,7 +177,7 @@
     <span class="key"><span class="dot a"></span><span class="lbl"><b>Thrill</b> — full list</span></span>
     <span class="key"><span class="dot h"></span><span class="lbl"><b>Chill</b> — gentle, no coasters</span></span>
     <span class="key"><span class="sun">☀</span><span class="lbl">outdoor — weather-sensitive</span></span>
-    <div class="howto">Tap <b>Ride / Skip</b> on any ride to drop or restore it — the order, land times, and the <b>buffer before the 8:30 fireworks</b> all recompute live.</div>
+    <div class="howto">Tap <b>Ride / Skip</b> on any ride to drop or restore it — the order, land times, and the <b>buffer before the 8:30 fireworks</b> all recompute live. Your choices save on this device.</div>
   </div>
 
   <!-- SUMMARY -->
@@ -280,7 +280,10 @@
       ride:{id:"pirates",n:"Pirates of the Caribbean",d:20} }
   ];
 
-  var out = {}; // id -> true if scratched
+  var STORAGE_KEY = 'mccanniversary-riorskip';
+  var out = {}; // id -> true if skipped
+  try { var _s = localStorage.getItem(STORAGE_KEY); if(_s) out = JSON.parse(_s) || {}; } catch(e){}
+  function persist(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(out)); } catch(e){} }
 
   function fmt(m){ var h=Math.floor(m/60), mm=m%60, ap=h>=12?'PM':'AM', hh=h%12; if(hh===0)hh=12; return hh+':'+String(mm).padStart(2,'0'); }
   function fmtAP(m){ return fmt(m)+' '+(m>=12*60?'PM':'AM'); }
@@ -352,8 +355,8 @@
 
   document.addEventListener('click', function(ev){
     var btn = ev.target.closest ? ev.target.closest('.btn-scr') : null;
-    if(btn){ var id = btn.getAttribute('data-id'); out[id] = !out[id]; render(); return; }
-    if(ev.target.id === 'resetBtn'){ out = {}; render(); }
+    if(btn){ var id = btn.getAttribute('data-id'); out[id] = !out[id]; persist(); render(); return; }
+    if(ev.target.id === 'resetBtn'){ out = {}; persist(); render(); }
   });
 
   render();
