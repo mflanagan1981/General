@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McCanniversary Magical Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7EEF6; --surface:#F8FBFE; --ink:#26375D; --ink-deep:#1B2A49; --soft:#5E6F92; --line:#C6D4E4;
+    --gold:#A67C1E; --gold-tint:#F1E8CF; --gold-edge:#DDCB9C;
+    --teal:#1B7C74; --teal-tint:#D6EAE7; --teal-edge:#A7D3CE;
+    --warn:#B5662A; --warn-bg:#F4E7D8; --warn-edge:#E4C7A8; --star:#B99231;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;
+    font-feature-settings:'tnum' 1;line-height:1.4;padding:24px 16px 60px;position:relative}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:
+      radial-gradient(1.6px 1.6px at 8% 14%,#fff,transparent),
+      radial-gradient(1.4px 1.4px at 22% 40%,var(--star),transparent),
+      radial-gradient(1.2px 1.2px at 68% 12%,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 88% 30%,var(--star),transparent),
+      radial-gradient(1.3px 1.3px at 40% 8%,#fff,transparent),
+      radial-gradient(1.4px 1.4px at 92% 62%,#fff,transparent),
+      radial-gradient(1.2px 1.2px at 14% 78%,var(--star),transparent),
+      radial-gradient(1.5px 1.5px at 78% 88%,#fff,transparent);}
+  .sheet{max-width:960px;margin:0 auto;position:relative;z-index:1}
+
+  /* masthead */
+  .mast{text-align:center;padding-bottom:16px;margin-bottom:8px;border-bottom:2px solid var(--ink)}
+  .crest-moon{display:block;margin:0 auto 2px}
+  .kicker{font-family:'Cinzel',serif;font-weight:600;letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--soft)}
+  .mast h1{font-family:'Great Vibes',cursive;font-weight:400;color:var(--ink);font-size:clamp(50px,12vw,90px);line-height:.9;margin:0}
+  .swoosh{display:block;width:min(560px,92%);height:auto;margin:-2px auto 4px}
+  .subtitle{font-family:'Cinzel',serif;font-weight:600;letter-spacing:.26em;text-transform:uppercase;font-size:clamp(12px,2.4vw,15px);color:var(--gold)}
+  .subtitle .yr{color:var(--ink)}
+  .facts{display:flex;justify-content:center;flex-wrap:wrap;gap:5px 16px;font-size:12.5px;color:var(--soft);font-weight:500;margin-top:12px}
+  .facts b{color:var(--ink);font-weight:600}.facts .sep{color:var(--line)}
+
+  /* legend + how-to */
+  .legend{display:flex;flex-wrap:wrap;gap:9px 20px;align-items:center;padding:12px 0 2px;font-size:12.5px;font-weight:500}
+  .key{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:13px;height:13px;border-radius:4px;flex:none}.dot.a{background:var(--gold)}.dot.h{background:var(--teal)}
+  .key .lbl b{font-weight:700}.sun{color:var(--warn);font-weight:700}
+  .howto{font-size:12px;color:var(--soft);font-weight:500;margin:6px 0 0;width:100%}
+  .howto b{color:var(--ink);font-weight:700}
+
+  /* sticky summary */
+  .summary{position:sticky;top:0;z-index:20;background:rgba(231,238,246,.97);backdrop-filter:blur(6px);
+    border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:12px 0 8px;
+    display:flex;flex-wrap:wrap;gap:9px 16px;align-items:center;box-shadow:0 2px 10px rgba(27,42,73,.06)}
+  .sitem{display:flex;flex-direction:column;line-height:1.18}
+  .sitem .sk{font-family:'Cinzel',serif;font-weight:700;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+  .sitem .sv{font-family:'Inter',sans-serif;font-weight:700;font-size:14px;color:var(--ink-deep)}
+  .summary .buffer{margin-left:auto;text-align:right;padding-left:12px;border-left:1px solid var(--line)}
+  .summary .buffer.ok .sv{color:var(--teal)}
+  .summary .buffer.tight .sv{color:var(--gold)}
+  .summary .buffer.over .sv{color:var(--warn)}
+  .reset{font-family:'Inter',sans-serif;font-weight:600;font-size:11px;border:1.5px solid var(--line);
+    background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer}
+  .reset:hover{border-color:var(--ink)}
+
+  /* park */
+  .park{margin-top:20px;position:relative}
+  .parkhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1.5px solid var(--line);padding-bottom:6px;margin-bottom:4px;position:relative;z-index:1}
+  .parkhead h2{font-family:'Cinzel',serif;font-weight:700;font-size:21px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-deep)}
+  .parkhead .win{font-size:13px;font-weight:700;color:var(--soft)}
+  .parkhead .tag{font-size:11px;font-weight:600;color:var(--soft);border:1px solid var(--line);border-radius:999px;padding:2px 9px;background:var(--surface)}
+  .castle-wm{position:absolute;right:-6px;top:-40px;width:150px;opacity:.09;z-index:0;pointer-events:none}
+
+  /* station */
+  .station{padding:13px 0 4px;border-bottom:1px dashed var(--line)}
+  .station:last-child{border-bottom:none}
+  .landbar{display:flex;align-items:center;gap:10px;margin-bottom:9px;flex-wrap:wrap}
+  .time{font-family:'Inter',sans-serif;font-weight:700;font-size:14px;color:var(--ink);background:var(--surface);border:1.5px solid var(--ink);border-radius:6px;padding:2px 9px;flex:none}
+  .land{font-family:'Cinzel',serif;font-weight:600;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-deep)}
+  .landnote{font-size:11.5px;color:var(--soft);font-weight:500}
+
+  .tracks{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .col{border-radius:9px;padding:9px 11px 10px;background:var(--surface)}
+  .col.a{border:1px solid var(--gold-edge);box-shadow:inset 3px 0 0 var(--gold)}
+  .col.h{border:1px solid var(--teal-edge);box-shadow:inset 3px 0 0 var(--teal)}
+  .coltag{font-family:'Cinzel',serif;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;display:flex;gap:7px;align-items:baseline;flex-wrap:wrap}
+  .col.a .coltag{color:var(--gold)}.col.h .coltag{color:var(--teal)}
+  .coltag .who{color:var(--soft);font-weight:500;letter-spacing:.02em;text-transform:none;font-size:11px;font-family:'Inter',sans-serif}
+  .rides{list-style:none}
+  .ride{display:flex;gap:8px;align-items:center;padding:3px 0}
+  .ride .seq{color:var(--soft);font-weight:700;font-size:11px;min-width:14px;flex:none}
+  .ride .rname{font-size:13.5px;font-weight:500;flex:1}
+  .ride .tiny{font-size:11px;color:var(--soft);font-weight:500}
+  .ride .wsun{color:var(--warn);font-size:11px}
+  .ride.scr .rname{text-decoration:line-through;color:var(--soft);opacity:.65}
+
+  /* scratch button */
+  .btn-scr{flex:none;font-family:'Inter',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.03em;
+    border-radius:999px;padding:3px 10px;cursor:pointer;border:1.5px solid;transition:.12s;min-width:74px;text-align:center}
+  .btn-scr.in{color:var(--ink);border-color:var(--line);background:var(--surface)}
+  .btn-scr.in:hover{border-color:var(--warn);color:var(--warn)}
+  .btn-scr.out{color:#fff;border-color:var(--warn);background:var(--warn)}
+  .btn-scr:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  /* shared card */
+  .sharecard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px;text-align:center;margin-top:4px;box-shadow:inset 4px 0 0 var(--gold),inset -4px 0 0 var(--teal)}
+  .sharecard.scr{opacity:.6}
+  .sharecard.scr .shareride{text-decoration:line-through}
+  .sharecard .sharetag{font-family:'Cinzel',serif;font-weight:700;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);margin-bottom:3px}
+  .sharecard .shareride{font-family:'Cinzel',serif;font-weight:700;font-size:19px;letter-spacing:.02em;color:var(--ink-deep)}
+  .sharecard .sharesub{font-size:12px;color:var(--soft);font-weight:500;margin:3px 0 8px}
+
+  /* chips */
+  .node{display:flex;justify-content:center;margin:10px 0 2px}
+  .chip{font-size:12px;font-weight:600;background:var(--surface);border:1.5px solid var(--ink);border-radius:999px;padding:4px 13px;display:inline-flex;align-items:center;gap:8px;color:var(--ink);text-align:center}
+  .chip .mk{font-family:'Cinzel',serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:10px;color:var(--ink)}
+
+  /* hop */
+  .hop{margin:15px 0;background:var(--ink-deep);color:#fff;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .hop .arw{font-family:'Cinzel',serif;font-weight:700;font-size:17px;letter-spacing:.1em}
+  .hop .htime{font-family:'Inter',sans-serif;font-weight:700;font-size:14px;background:rgba(255,255,255,.15);border-radius:5px;padding:2px 9px;flex:none}
+  .hop .htxt{font-size:12.5px;font-weight:500;color:#DCE5F1}.hop .htxt b{color:#fff;font-weight:700}
+
+  /* finale */
+  .finale{margin-top:18px;border-radius:12px;padding:18px 20px;color:#fff;background:linear-gradient(150deg,#243A6B 0%,#1B2A49 55%,#141F38 100%);border:1px solid #33456F;position:relative;overflow:hidden;text-align:center}
+  .finale .fmoon{position:absolute;top:14px;left:18px;opacity:.85}
+  .finale .fstars{position:absolute;inset:0;opacity:.7;pointer-events:none;
+    background-image:radial-gradient(1.6px 1.6px at 20% 30%,var(--star),transparent),radial-gradient(1.4px 1.4px at 74% 22%,#fff,transparent),radial-gradient(1.5px 1.5px at 60% 68%,var(--star),transparent),radial-gradient(1.3px 1.3px at 86% 54%,#fff,transparent),radial-gradient(1.4px 1.4px at 34% 74%,#fff,transparent);}
+  .finale-in{position:relative;z-index:1}
+  .finale .flabel{font-family:'Cinzel',serif;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:11px;color:var(--star);margin-bottom:5px;display:inline-flex;align-items:center;gap:10px}
+  .finale .ftime{background:rgba(185,146,49,.18);border:1px solid rgba(185,146,49,.5);color:var(--star);border-radius:5px;padding:1px 8px;font-family:'Inter',sans-serif;font-weight:700}
+  .finale h3{font-family:'Great Vibes',cursive;font-weight:400;font-size:40px;line-height:1;margin:2px 0 8px}
+  .finale p{font-size:12.5px;font-weight:500;color:#D6DEEC;max-width:660px;margin:0 auto}.finale p b{color:#fff;font-weight:700}
+
+  /* weather */
+  .audible{margin-top:20px;background:var(--warn-bg);border:1.5px solid var(--warn-edge);border-radius:11px;padding:14px 16px}
+  .audible h3{font-family:'Cinzel',serif;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--warn);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .audible p{font-size:13px;font-weight:500;margin:4px 0}.audible b{font-weight:700}
+  .audible .lead{color:var(--warn);font-weight:700;font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;margin-right:5px}
+
+  .foot{margin-top:16px;font-size:11px;color:var(--soft);text-align:center;font-weight:500}
+  .foot .fscript{font-family:'Great Vibes',cursive;font-size:19px;color:var(--ink);display:block;margin-bottom:3px}
+
+  @media (max-width:620px){.tracks{grid-template-columns:1fr}.summary .buffer{border-left:none;padding-left:0}}
+  @media print{
+    body{background:var(--paper);padding:0;font-size:11.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    body::before{display:none}.sheet{max-width:none}
+    .summary{position:static}.btn-scr,.reset{display:none}
+    .park,.audible,.station,.hop,.finale{break-inside:avoid}
+    @page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="mast">
+    <svg class="crest-moon" width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><path d="M29 5 a16 16 0 1 0 0 30 a12.5 12.5 0 1 1 0 -30 Z" fill="#26375D"/></svg>
+    <div class="kicker">50 Years of Magic · Private VIP Tour</div>
+    <h1>McCanniversary</h1>
+    <svg class="swoosh" viewBox="0 0 620 46" fill="none" aria-hidden="true">
+      <path d="M18 30 C 150 8, 300 8, 470 22 S 585 34, 604 14" stroke="#26375D" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+      <circle cx="70" cy="17" r="1.6" fill="#B99231"/><circle cx="130" cy="12" r="1.3" fill="#26375D"/><circle cx="215" cy="11" r="1.5" fill="#B99231"/><circle cx="330" cy="12" r="1.3" fill="#26375D"/><circle cx="430" cy="18" r="1.5" fill="#B99231"/><circle cx="520" cy="26" r="1.4" fill="#26375D"/>
+      <polygon points="270,7 272,15 280,17 272,19 270,27 268,19 260,17 268,15" fill="#B99231" opacity=".9"/>
+    </svg>
+    <div class="subtitle">A Magical Day</div>
+    <div class="facts">
+      <span><b>Fri July 3</b> · 1:30 PM start</span><span class="sep">·</span>
+      <span>Party of <b>11</b></span><span class="sep">·</span>
+      <span><b>2 guides</b>, parallel tracks</span><span class="sep">·</span>
+      <span>Epcot → Magic Kingdom → fireworks</span>
+    </div>
+  </header>
+
+  <div class="legend">
+    <span class="key"><span class="dot a"></span><span class="lbl"><b>Thrill</b> — full list</span></span>
+    <span class="key"><span class="dot h"></span><span class="lbl"><b>Chill</b> — gentle, no coasters</span></span>
+    <span class="key"><span class="sun">☀</span><span class="lbl">outdoor — weather-sensitive</span></span>
+    <div class="howto">Tap <b>Ride / Skip</b> on any ride to drop or restore it — the order, land times, and the <b>buffer before the 8:30 fireworks</b> all recompute live.</div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="sitem"><span class="sk">Epcot</span><span class="sv" id="sEpcot">—</span></div>
+    <div class="sitem"><span class="sk">Hop</span><span class="sv" id="sHop">—</span></div>
+    <div class="sitem"><span class="sk">Magic Kingdom</span><span class="sv" id="sMk">—</span></div>
+    <div class="sitem buffer" id="sBufferWrap"><span class="sk">Buffer to 8:30 fireworks</span><span class="sv" id="sBuffer">—</span></div>
+    <button class="reset" id="resetBtn" type="button">Reset all</button>
+  </div>
+
+  <!-- EPCOT -->
+  <section class="park">
+    <div class="parkhead"><h2>Epcot</h2><span class="win" id="epcotWin">—</span><span class="tag">Both tracks live from start</span></div>
+    <div id="epcotBody"></div>
+  </section>
+
+  <!-- HOP -->
+  <div class="hop">
+    <span class="arw">→</span>
+    <span class="htime" id="hopTime">—</span>
+    <span class="htxt"><b>The hop.</b> Budget the full 45 min — drive plus load/unload both ends. Largest dead-time block of the day; don't let it creep.</span>
+  </div>
+
+  <!-- MAGIC KINGDOM -->
+  <section class="park">
+    <svg class="castle-wm" viewBox="0 0 160 150" aria-hidden="true">
+      <g fill="#26375D">
+        <rect x="24" y="70" width="20" height="58"/><polygon points="22,70 46,70 34,48"/>
+        <rect x="116" y="70" width="20" height="58"/><polygon points="114,70 138,70 126,48"/>
+        <rect x="50" y="56" width="18" height="72"/><polygon points="48,56 70,56 59,34"/>
+        <rect x="92" y="56" width="18" height="72"/><polygon points="90,56 112,56 101,34"/>
+        <rect x="70" y="40" width="20" height="88"/><polygon points="67,40 93,40 80,12"/>
+        <polygon points="80,12 80,4 90,7 80,10"/>
+      </g>
+      <path d="M72 128 V104 a8 8 0 0 1 16 0 V128 Z" fill="#E7EEF6"/>
+    </svg>
+    <div class="parkhead"><h2>Magic Kingdom</h2><span class="win" id="mkWin">—</span><span class="tag">Clockwise loop · ends at fireworks</span></div>
+    <div id="mkBody"></div>
+    <div class="node"><span class="chip"><span class="mk">◆ Converge</span> both tracks walk to the reserved viewing area</span></div>
+  </section>
+
+  <!-- FINALE -->
+  <div class="finale">
+    <div class="fstars"></div>
+    <svg class="fmoon" width="26" height="26" viewBox="0 0 40 40" aria-hidden="true"><path d="M29 5 a16 16 0 1 0 0 30 a12.5 12.5 0 1 1 0 -30 Z" fill="#B99231"/></svg>
+    <div class="finale-in">
+      <div class="flabel">✦ Grand Finale <span class="ftime">8:30 PM</span> ✦</div>
+      <h3>Fireworks over the Castle</h3>
+      <p>Both tracks together in the <b>VIP reserved, roped-off area</b> — guides bring all 11 in and hold it. The fireworks are the fixed anchor: everything above floats against this. Keep the <b>buffer</b> in the summary positive and you'll walk in with time to spare. Fifty years of magic, sent off right.</p>
+    </div>
+  </div>
+
+  <!-- WEATHER -->
+  <div class="audible">
+    <h3>☀ Weather audible</h3>
+    <p><span class="lead">Base</span> The loop front-loads <b>TRON</b>; <b>Big Thunder</b> and <b>Test Track</b>'s loop are the other outdoor rides. July storms are likely in the afternoon.</p>
+    <p><span class="lead">Clear sky</span> Any open window, the nearest guide grabs the nearest outdoor coaster <b>on sight</b>, loop order be damned.</p>
+    <p><span class="lead">Storm on</span> Both tracks pivot to indoor — Space Mountain, Haunted Mansion, Small World, Pirates, PhilharMagic — and return to the coasters after it clears.</p>
+  </div>
+
+  <div class="foot">
+    <span class="fscript">Happily ever after</span>
+    Scratch rides live as the day runs; times, order, and the buffer update so you can always see whether you're on track for the 8:30 fireworks. ☀ = outdoor / weather-sensitive.
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var START = 13*60+30;      // 1:30 PM
+  var HOP = 45;              // minutes
+  var ROPE_BY = 20*60+10;    // must be at reserved viewing by 8:10
+  var FIREWORKS = 20*60+30;  // 8:30
+
+  // ---- itinerary model (durations are all-in minutes: Lightning Lane + walk + ride, busy-day estimates) ----
+  var EPCOT = [
+    { land:"World Discovery / Celebration", note:"front of park — everything a short walk apart",
+      thrill:[ {id:"gotg",n:"Guardians of the Galaxy",d:30}, {id:"testtrack",n:"Test Track",d:30,w:1} ],
+      chill:[ {id:"sse",n:"Spaceship Earth",d:15}, {id:"seas",n:"The Seas with Nemo &amp; Friends",d:15}, {id:"figment",n:"Journey Into Imagination — Figment",d:12}, {id:"frozen",n:"Frozen Ever After",d:18,t:"optional Chill add in Norway"} ] },
+    { shared:1, land:"World Showcase", sub:"Trackless dark ride · France pavilion — the group reunites here",
+      ride:{id:"ratatouille",n:"Ratatouille",d:30} }
+  ];
+  var MK = [
+    { land:"Tomorrowland",
+      thrill:[ {id:"space",n:"Space Mountain",d:25}, {id:"tron",n:"TRON Lightcycle Run",d:30,w:1} ],
+      chill:[ {id:"buzz",n:"Buzz Lightyear",d:15}, {id:"speedway",n:"Tomorrowland Speedway",d:12}, {id:"peoplemover",n:"PeopleMover",d:12}, {id:"carousel",n:"Carousel of Progress",d:15} ] },
+    { land:"Fantasyland",
+      thrill:[ {id:"sevendwarfs",n:"Seven Dwarfs Mine Train",d:30}, {id:"peterpan",n:"Peter Pan's Flight",d:25} ],
+      chill:[ {id:"dumbo",n:"Dumbo",d:12}, {id:"mermaid",n:"Little Mermaid",d:12}, {id:"pooh",n:"Winnie the Pooh",d:12}, {id:"philhar",n:"Mickey's PhilharMagic",d:12}, {id:"carrousel1",n:"Prince Charming Carrousel",d:10} ] },
+    { shared:1, land:"Fantasyland · shared", sub:"High-capacity classic — both tracks ride",
+      ride:{id:"smallworld",n:"It's a Small World",d:15} },
+    { land:"Liberty Square",
+      thrill:[ {id:"mansion",n:"Haunted Mansion",d:20} ],
+      chill:[ {id:"madtea",n:"Mad Tea Party",d:12}, {id:"carrousel2",n:"Carrousel (second lap)",d:10} ] },
+    { land:"Frontierland",
+      thrill:[ {id:"bigthunder",n:"Big Thunder Mountain",d:25,w:1}, {id:"tiana",n:"Tiana's Bayou Adventure",d:25} ],
+      chill:[ {id:"carpets",n:"Magic Carpets of Aladdin",d:12}, {id:"jungle",n:"Jungle Cruise",d:18}, {id:"tiki",n:"Tiki Room",d:15} ] },
+    { shared:1, land:"Adventureland · last ride", sub:"Everyone reunites for the final ride before fireworks",
+      ride:{id:"pirates",n:"Pirates of the Caribbean",d:20} }
+  ];
+
+  var out = {}; // id -> true if scratched
+
+  function fmt(m){ var h=Math.floor(m/60), mm=m%60, ap=h>=12?'PM':'AM', hh=h%12; if(hh===0)hh=12; return hh+':'+String(mm).padStart(2,'0'); }
+  function fmtAP(m){ return fmt(m)+' '+(m>=12*60?'PM':'AM'); }
+  function trackSum(rides){ var s=0; for(var i=0;i<rides.length;i++){ if(!out[rides[i].id]) s+=rides[i].d; } return s; }
+
+  function rideRow(r, seq){
+    var o = out[r.id];
+    return '<li class="ride'+(o?' scr':'')+'">'
+      + '<span class="seq">'+(o?'—':seq)+'</span>'
+      + '<span class="rname">'+r.n+(r.w?' <span class="wsun">☀</span>':'')+(r.t?' <span class="tiny">— '+r.t+'</span>':'')+'</span>'
+      + '<button class="btn-scr '+(o?'out':'in')+'" data-id="'+r.id+'" aria-pressed="'+(o?'true':'false')+'">'+(o?'Skip':'Ride')+'</button>'
+      + '</li>';
+  }
+
+  function renderPark(blocks, start, counters){
+    var t = start, html = '';
+    for(var b=0;b<blocks.length;b++){
+      var blk = blocks[b];
+      if(blk.shared){
+        var o = out[blk.ride.id], dur = o?0:blk.ride.d;
+        html += '<div class="station">'
+          + '<div class="landbar"><span class="time">'+fmt(t)+'</span><span class="land">'+blk.land+'</span></div>'
+          + '<div class="sharecard'+(o?' scr':'')+'">'
+          +   '<div class="sharetag">Both tracks ride together</div>'
+          +   '<div class="shareride">'+blk.ride.n+'</div>'
+          +   '<div class="sharesub">'+blk.sub+'</div>'
+          +   '<button class="btn-scr '+(o?'out':'in')+'" data-id="'+blk.ride.id+'" aria-pressed="'+(o?'true':'false')+'">'+(o?'Skip':'Ride')+'</button>'
+          + '</div></div>';
+        t += dur;
+      } else {
+        var tRows='', cRows='', i;
+        for(i=0;i<blk.thrill.length;i++){ var tr=blk.thrill[i]; tRows+=rideRow(tr, out[tr.id]?'':(++counters.t)); }
+        for(i=0;i<blk.chill.length;i++){ var cr=blk.chill[i]; cRows+=rideRow(cr, out[cr.id]?'':(++counters.c)); }
+        var dur = Math.max(trackSum(blk.thrill), trackSum(blk.chill));
+        html += '<div class="station">'
+          + '<div class="landbar"><span class="time">'+fmt(t)+'</span><span class="land">'+blk.land+'</span>'+(blk.note?'<span class="landnote">'+blk.note+'</span>':'')+'</div>'
+          + '<div class="tracks">'
+          +   '<div class="col a"><div class="coltag">Thrill</div><ul class="rides">'+(tRows||'<li class="ride"><span class="rname" style="color:var(--soft)">—</span></li>')+'</ul></div>'
+          +   '<div class="col h"><div class="coltag">Chill <span class="who">· menu</span></div><ul class="rides">'+(cRows||'<li class="ride"><span class="rname" style="color:var(--soft)">—</span></li>')+'</ul></div>'
+          + '</div></div>';
+        t += dur;
+      }
+    }
+    return { html:html, end:t };
+  }
+
+  function render(){
+    var ec = {t:0,c:0}, e = renderPark(EPCOT, START, ec);
+    document.getElementById('epcotBody').innerHTML = e.html;
+    var epcotEnd = e.end, hopStart = epcotEnd, hopEnd = epcotEnd + HOP, mkStart = hopEnd;
+    var mc = {t:0,c:0}, m = renderPark(MK, mkStart, mc);
+    document.getElementById('mkBody').innerHTML = m.html;
+    var mkEnd = m.end, buffer = ROPE_BY - mkEnd;
+
+    document.getElementById('epcotWin').textContent = fmt(START)+' – '+fmt(epcotEnd)+' PM';
+    document.getElementById('mkWin').textContent = fmt(mkStart)+' – '+fmt(mkEnd)+' PM';
+    document.getElementById('hopTime').textContent = fmt(hopStart)+' – '+fmt(hopEnd);
+
+    document.getElementById('sEpcot').textContent = fmt(START)+'–'+fmt(epcotEnd);
+    document.getElementById('sHop').textContent = fmt(hopStart)+'–'+fmt(hopEnd);
+    document.getElementById('sMk').textContent = fmt(mkStart)+'–'+fmt(mkEnd);
+
+    var bw = document.getElementById('sBufferWrap'), bv = document.getElementById('sBuffer');
+    bw.classList.remove('ok','tight','over');
+    if(buffer < 0){ bw.classList.add('over'); bv.textContent = 'over by '+(-buffer)+' min'; }
+    else if(buffer < 20){ bw.classList.add('tight'); bv.textContent = buffer+' min (tight)'; }
+    else { bw.classList.add('ok'); bv.textContent = buffer+' min'; }
+  }
+
+  document.addEventListener('click', function(ev){
+    var btn = ev.target.closest ? ev.target.closest('.btn-scr') : null;
+    if(btn){ var id = btn.getAttribute('data-id'); out[id] = !out[id]; render(); return; }
+    if(ev.target.id === 'resetBtn'){ out = {}; render(); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
